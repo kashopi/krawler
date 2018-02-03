@@ -1,5 +1,6 @@
-from cache import CacheInterface
 import os
+
+from cache import CacheInterface
 
 
 class FileCache(CacheInterface):
