@@ -10,11 +10,10 @@ class FileCache(CacheInterface):
             fp.write(contents)
 
     def exists(self, key):
-        return(os.path.isfile(self._get_filename(key)))
+        return os.path.isfile(self._get_filename(key))
 
     def get(self, key):
-        return(open(self._get_filename(key),
-                    "rb").read())
+        return open(self._get_filename(key), "rb").read()
 
     def _get_filename(self, key):
         return ".cache/{}".format(key)
