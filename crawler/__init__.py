@@ -25,7 +25,7 @@ class Crawler(object):
         for link in soup.find_all('a'):
             if self._is_valid_link(link):
                 name, href = self._process_link(link)
-                logging.info("Found link: %s", name)
+                logging.debug("Found link: %s", name)
                 links_list[href] = name
         return links_list
 
