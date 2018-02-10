@@ -1,11 +1,12 @@
 import logging
 
-from cache.filesystem import FileCache
+from cache.redis import RedisCache
 from crawler import Crawler
 
 
 logging.basicConfig(level=logging.INFO)
-crawler = Crawler(FileCache())
-page = crawler.get_page("https://google.es")
+crawler = Crawler(RedisCache())
+# page = crawler.get_page("https://google.es")
+page = crawler.get_page("https://www.simracingcoach.com/")
 links = crawler.get_links(page)
-print(links)
+logging.info("Found %d links", len(links.keys()))
