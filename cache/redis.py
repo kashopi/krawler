@@ -1,15 +1,14 @@
 import logging
-import redis
 
 from cache import CacheInterface
 
 
 class RedisCache(CacheInterface):
 
-    def __init__(self):
+    def __init__(self, connection):
         super(RedisCache, self).__init__()
         logging.info("Connecting Redis")
-        self._redis = redis.StrictRedis(host='localhost', port=6379, db=0)
+        self._redis = connection
 
     def store(self, key, contents):
         self._redis.set(key, contents)

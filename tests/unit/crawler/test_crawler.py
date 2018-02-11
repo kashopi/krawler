@@ -12,20 +12,20 @@ class CrawlerTest(TestCase):
     def test_is_valid_link(self):
         links_config = ((False, ['blah']),
                         (True, ['href', 'blahbluh']))
-        crawler = Crawler(self.cache)
+        crawler = Crawler(self.cache, Mock())
         mock_link = Mock()
         for value, attrs in links_config:
             mock_link.attrs = attrs
             self.assertEqual(value, crawler._is_valid_link(mock_link))
 
     def test_init_sets_user_agent(self):
-        crawler = Crawler(self.cache)
+        crawler = Crawler(self.cache, Mock())
         self.assertEqual(USER_AGENT, crawler._headers['User-agent'])
 
     @patch("crawler.Crawler._get_key")
     def test_get_url_contents_checks_cache(self, mock_get_key):
         mock_get_key.return_value = "abc"
-        crawler = Crawler(self.cache)
+        crawler = Crawler(self.cache, Mock())
         with patch('crawler.requests') as mock_requests:
             crawler._get_url_contents("myurl")
             self.cache.exists.assert_called_once_with('abc')
@@ -33,7 +33,7 @@ class CrawlerTest(TestCase):
     @patch("crawler.Crawler._get_key")
     def test_get_url_does_not_request_when_cached(self, mock_get_key):
         mock_get_key.return_value = "abc"
-        crawler = Crawler(self.cache)
+        crawler = Crawler(self.cache, Mock())
         self.cache.exists.return_value = True
         with patch('crawler.requests') as mock_requests:
             crawler._get_url_contents("myurl")
@@ -42,7 +42,7 @@ class CrawlerTest(TestCase):
     @patch("crawler.Crawler._get_key")
     def test_get_url_requests_when_not_cached(self, mock_get_key):
         mock_get_key.return_value = "abc"
-        crawler = Crawler(self.cache)
+        crawler = Crawler(self.cache, Mock())
         self.cache.exists.return_value = False
         with patch('crawler.requests') as mock_requests:
             crawler._get_url_contents("myurl")
