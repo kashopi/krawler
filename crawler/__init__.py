@@ -35,8 +35,11 @@ class Crawler(object):
     def _process_link(self, link):
         return link.text, link.attrs.get('href')
 
+    def _get_key(self, data):
+        return md5(data.encode('utf-8')).hexdigest()
+
     def _get_url_contents(self, url):
-        key = md5(url.encode('utf-8')).hexdigest()
+        key = self._get_key(url)
         if self._cache_manager.exists(key):
             logging.info("Contents found in cache")
             return self._cache_manager.get(key)
