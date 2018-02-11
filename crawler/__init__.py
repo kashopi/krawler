@@ -28,7 +28,7 @@ class Crawler(object):
             sleep(1)
 
     def _process_message(self, message):
-        if message['type']=='message':
+        if message['type'] == 'message':
             logging.info("Received URL: %s", message)
             page = self.get_page(message['data'].decode('ascii'))
             links = self.get_links(page)

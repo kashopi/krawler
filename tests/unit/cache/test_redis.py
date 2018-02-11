@@ -1,8 +1,5 @@
 from unittest import TestCase
-
-from mock import patch
 from mock.mock import Mock
-
 from cache.redis import RedisCache
 
 
